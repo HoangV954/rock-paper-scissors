@@ -1,1 +1,32 @@
-<script></script>
+<script>
+    let hands = ["rock", "paper", "scissors"]
+    let player = "PapER";
+    let computer = getComputerChoice();
+    let formalPlayer = player.charAt(0).toUpperCase() + player.substring(1, player.length).toLowerCase();
+    let formalComp = computer.charAt(0).toUpperCase() + computer.substring(1, computer.length).toLowerCase();
+
+    function getComputerChoice() {
+        return hands[Math.floor(Math.random()*hands.length)];
+    }
+
+    function playRound(playerSelection, computerSelection) {
+        playerSelection = playerSelection.toLowerCase();
+        computerSelection = computerSelection.toLowerCase();
+
+        console.log(playerSelection);
+        console.log(computerSelection);
+        if (playerSelection === computerSelection) {
+            return "Draw!";
+        } else if (playerSelection === "rock" && computerSelection === "scissors" || playerSelection === "scissors" && computerSelection === "paper" || playerSelection === "paper" && computerSelection === "rock" ) {
+            return `You Win! ${formalPlayer} Beats ${formalComp}!`;
+        } else if (hands.indexOf(playerSelection) === -1) {
+            return "Wrong Input! READ the instructions before playing!";
+        } else {
+            return `You Lose! ${formalComp} Beats ${formalPlayer}!`;
+        }
+    }
+    
+    
+
+    console.log(playRound(player, computer))
+</script>
