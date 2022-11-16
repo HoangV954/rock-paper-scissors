@@ -1,32 +1,63 @@
 <script>
     let hands = ["rock", "paper", "scissors"]
-    let player = "PapER";
-    let computer = getComputerChoice();
-    let formalPlayer = player.charAt(0).toUpperCase() + player.substring(1, player.length).toLowerCase();
-    let formalComp = computer.charAt(0).toUpperCase() + computer.substring(1, computer.length).toLowerCase();
+    let player;
+    let computer;
+    let playerCounter = 0;
+    let computerCounter = 0;
+    
 
+    //Randomizing computer selection of hands
     function getComputerChoice() {
         return hands[Math.floor(Math.random()*hands.length)];
     }
+    
+    //Get user inputs
+    function getUserInput() {
+        return prompt("Choose between Rock, Paper and Scissors!");
+    }
 
+    //A single round of the game would look like this
     function playRound(playerSelection, computerSelection) {
+        //case-insensitive
         playerSelection = playerSelection.toLowerCase();
         computerSelection = computerSelection.toLowerCase();
+        let formalPlayer = player.charAt(0).toUpperCase() + player.substring(1, player.length).toLowerCase();
+        let formalComp = computer.charAt(0).toUpperCase() + computer.substring(1, computer.length).toLowerCase();
 
-        console.log(playerSelection);
-        console.log(computerSelection);
         if (playerSelection === computerSelection) {
-            return "Draw!";
+            alert("Draw!");
         } else if (playerSelection === "rock" && computerSelection === "scissors" || playerSelection === "scissors" && computerSelection === "paper" || playerSelection === "paper" && computerSelection === "rock" ) {
-            return `You Win! ${formalPlayer} Beats ${formalComp}!`;
+            playerCounter += 1;
+            console.log(playerCounter)
+            alert(`You Win! ${formalPlayer} Beats ${formalComp}!`);
         } else if (hands.indexOf(playerSelection) === -1) {
-            return "Wrong Input! READ the instructions before playing!";
+            alert("Wrong Input! READ the instructions before playing! Kindly refresh the page");
         } else {
-            return `You Lose! ${formalComp} Beats ${formalPlayer}!`;
+            computerCounter += 1;
+            console.log(computerCounter)
+            alert(`You Lose! ${formalComp} Beats ${formalPlayer}!`);
         }
     }
-    
-    
 
-    console.log(playRound(player, computer))
+
+    //A whole game of 5 rounds would look like this
+    function game() {
+        for (let i = 0; i < 5; i++) {
+            //Randomized elements need to be recalled during a loop.
+            //Otherwise, you'd end up with 5 of the same outputs.
+            player = getUserInput();
+            computer = getComputerChoice();
+            playRound(player, computer);
+        }
+        if (playerCounter > computerCounter) {
+            alert(`Total Scores: You - ${playerCounter} VS CPU - ${computerCounter} WINNER WINNER CHICKEN DINNER!`);
+        } else if (playerCounter === computerCounter) {
+            alert(`Total Scores: You - ${playerCounter} VS CPU - ${computerCounter} ...Awwwww shieet...here we go again`);
+        } else {
+            alert(`Total Scores: You - ${playerCounter} VS CPU - ${computerCounter} LOOOOOSER!`);
+        }
+    }
+
+    
+    game();
 </script>
