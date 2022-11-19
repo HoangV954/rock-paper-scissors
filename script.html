@@ -1,63 +1,114 @@
-<script>
-    let hands = ["rock", "paper", "scissors"]
-    let player;
-    let computer;
-    let playerCounter = 0;
-    let computerCounter = 0;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="btns">
+        <button id="Rock" class="btn">Rock</button>
+        <button id="Paper" class="btn">Paper</button>
+        <button id="Scissors" class="btn">Scissors</button>
+    </div>
+    <div class="result"></div>
+    <div class="announcement"></div>   
     
-
-    //Randomizing computer selection of hands
-    function getComputerChoice() {
-        return hands[Math.floor(Math.random()*hands.length)];
-    }
+    <script>
+        //Game Function
+        let hands = ["rock", "paper", "scissors"];
+        let playerCounter = 0;
+        let computerCounter = 0;
+        //Randomizing computer selection of hands
+        function getComputerChoice() {
+            return hands[Math.floor(Math.random()*hands.length)];
+        }
+        
+        //A single round of the game would look like this
+        function playRound(playerSelection, computerSelection) {
+            //case-insensitive
+            playerSelection = playerSelection.toLowerCase();
+            computerSelection = computerSelection.toLowerCase();
+            let formalPlayer = playerSelection.charAt(0).toUpperCase() + playerSelection.substring(1, playerSelection.length).toLowerCase();
+            let formalComp = computerSelection.charAt(0).toUpperCase() + computerSelection.substring(1, computerSelection.length).toLowerCase();
     
-    //Get user inputs
-    function getUserInput() {
-        return prompt("Choose between Rock, Paper and Scissors!");
-    }
-
-    //A single round of the game would look like this
-    function playRound(playerSelection, computerSelection) {
-        //case-insensitive
-        playerSelection = playerSelection.toLowerCase();
-        computerSelection = computerSelection.toLowerCase();
-        let formalPlayer = player.charAt(0).toUpperCase() + player.substring(1, player.length).toLowerCase();
-        let formalComp = computer.charAt(0).toUpperCase() + computer.substring(1, computer.length).toLowerCase();
-
-        if (playerSelection === computerSelection) {
-            alert("Draw!");
-        } else if (playerSelection === "rock" && computerSelection === "scissors" || playerSelection === "scissors" && computerSelection === "paper" || playerSelection === "paper" && computerSelection === "rock" ) {
-            playerCounter += 1;
-            console.log(playerCounter)
-            alert(`You Win! ${formalPlayer} Beats ${formalComp}!`);
-        } else if (hands.indexOf(playerSelection) === -1) {
-            alert("Wrong Input! READ the instructions before playing! Kindly refresh the page");
-        } else {
-            computerCounter += 1;
-            console.log(computerCounter)
-            alert(`You Lose! ${formalComp} Beats ${formalPlayer}!`);
+            if (playerSelection === computerSelection) {
+                alert("Draw!");
+            } else if (playerSelection === "rock" && computerSelection === "scissors" || playerSelection === "scissors" && computerSelection === "paper" || playerSelection === "paper" && computerSelection === "rock" ) {
+                playerCounter += 1;
+                console.log(playerCounter)
+                alert(`You Win! ${formalPlayer} Beats ${formalComp}!`);
+                
+            } else {
+                computerCounter += 1;
+                console.log(computerCounter)
+                alert(`You Lose! ${formalComp} Beats ${formalPlayer}!`);
+            }
         }
-    }
 
-
-    //A whole game of 5 rounds would look like this
-    function game() {
-        for (let i = 0; i < 5; i++) {
-            //Randomized elements need to be recalled during a loop.
-            //Otherwise, you'd end up with 5 of the same outputs.
-            player = getUserInput();
-            computer = getComputerChoice();
-            playRound(player, computer);
+        function score() {
+            if (playerCounter === 5 || computerCounter === 5) {
+                console.log("WE HAVE A WINNER")
+            }
+            if (playerCounter > computerCounter && playerCounter >= 5)  {
+                const para = document.createElement('p');
+                para.textContent = "YOU WON";
+                para.style.cssText ='color: green; font-size: 30px; font-weight: bolder';
+                div.appendChild(para);
+                setTimeout(function(){
+                    alert('FATALITY');
+                }, 2)   
+            } else if (computerCounter > playerCounter && computerCounter == 5) {
+                const para = document.createElement('p');
+                para.textContent = "YOU LOST";
+                div.appendChild(para);
+                para.style.cssText ='color: red; font-size: 30px; font-weight: bolder';
+                setTimeout(function(){
+                    alert('YOU\' RE FINISHED');
+                }, 2)             
+            }
         }
-        if (playerCounter > computerCounter) {
-            alert(`Total Scores: You - ${playerCounter} VS CPU - ${computerCounter} WINNER WINNER CHICKEN DINNER!`);
-        } else if (playerCounter === computerCounter) {
-            alert(`Total Scores: You - ${playerCounter} VS CPU - ${computerCounter} ...Awwwww shieet...here we go again`);
-        } else {
-            alert(`Total Scores: You - ${playerCounter} VS CPU - ${computerCounter} LOOOOOSER!`);
-        }
-    }
+        //A whole game of 5 rounds would look like this
+        /*  function game() {
+            for (let i = 0; i < 5; i++) {
+                //Randomized elements need to be recalled during a loop.
+                //Otherwise, you'd end up with 5 of the same outputs.
+                player = getUserInput();
+                computer = getComputerChoice();
+                playRound(player, computer);
+            }
+            if (playerCounter > computerCounter) {
+                alert(`Total Scores: You - ${playerCounter} VS CPU - ${computerCounter} WINNER WINNER CHICKEN DINNER!`);
+            } else if (playerCounter === computerCounter) {
+                alert(`Total Scores: You - ${playerCounter} VS CPU - ${computerCounter} ...Awwwww shieet...here we go again`);
+            } else {
+                alert(`Total Scores: You - ${playerCounter} VS CPU - ${computerCounter} LOOOOOSER!`);
+            }
+        }  
+        game();*/
 
-    
-    game();
-</script>
+        //HTML & CSS
+        const div = document.querySelector('.announcement')
+        const result = document.querySelector('.result')
+        result.textContent = `Current score is: Player 0 vs Computer 0`;
+        
+        const buttons = document.querySelectorAll('.btn')
+        buttons.forEach((button) => {
+            button.addEventListener('click', function(button) {
+                let playerChoice = button.target.id;
+                let computer = getComputerChoice();
+                playRound(playerChoice, computer);
+                result.textContent = `Current score is: Player ${playerCounter} vs Computer ${computerCounter}`;
+                score();
+            })
+        })
+        
+        
+        
+    </script>
+</body>
+</html>
+

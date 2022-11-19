@@ -1,0 +1,27 @@
+*, ::before, ::after {
+  box-sizing: border-box;  
+}
+
+body {
+    background-color: violet;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+    gap: 50px;
+}
+
+.result {
+    color: aliceblue;
+    font-size: 24px;
+    font-weight: bolder;
+}
+
+.btn {
+    padding: 20px 40px;
+    color: rebeccapurple;
+    background-color: burlywood;
+    border-radius: 12px;
+    margin: 10px 50px;
+}
